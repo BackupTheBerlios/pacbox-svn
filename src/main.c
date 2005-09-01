@@ -1,6 +1,9 @@
+#include "string_utils.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 
 /* Prints the usage for the program */
 void print_usage (const char *name);
@@ -10,12 +13,6 @@ void print_help ();
 
 /* Prints info for the compile and so forth */
 void print_info ();
-
-/* Returns the position of the given character 
- * If not found the pointer to the first character
- * is returned
- */
-char * string_find (char *str, char ch);
 
 
 int main (int argc, char **argv)
@@ -71,7 +68,7 @@ void print_info ()
 	while (fgets (buffer, sizeof (buffer), fd))
 	{
 		char right[512];
-		char left[100];
+		/*char left[100];*/
 		char *tmp = string_find (buffer, '=');
 		strncpy (right, tmp + 1, sizeof (right));
 		*tmp = '\0';
@@ -83,18 +80,3 @@ void print_info ()
 	fclose (fd);
 }
 
-char* string_find (char *str, char ch)
-{
-	int length = strlen (str);
-	char *ptr = str;
-	int i;
-	
-	/* Loops through the string */
-	for (i = 0; i < length; ++i)
-	{
-		if (str[i] == ch)
-			ptr = &str[i];
-	}
-
-	return ptr;
-}
