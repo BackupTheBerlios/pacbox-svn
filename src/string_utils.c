@@ -23,9 +23,7 @@ void string_split (const char *string, char *left, char *right, char token)
 	int i = 0;
 	char *token_pos = string_find ((char *)string, token);
 	
-	/* True if no token is found witch means not
-	 * a valid string
-	 */
+	/* checks if token is not found*/
 	if (token_pos == string)
 		return;
 	
