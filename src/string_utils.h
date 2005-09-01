@@ -1,5 +1,5 @@
-#ifndef _STRING_H_
-#define _STRING_H_
+#ifndef _STRING_UTILS_H_
+#define _STRING_UTILS_H_
 
 /* Returns the position of the given character 
  * If not found the pointer to the first character
@@ -12,4 +12,4 @@ char * string_find (char *str, char ch);
  */
 void string_split (const char *string, char *left, char *right, char token);
 
-#endif /* _STRING_H_ */
+#endif /* _STRING_UTILS_H_ */

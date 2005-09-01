@@ -1,3 +1,6 @@
+#ifndef _PACKAGE_PARSER_H_
+#define _PACKAGE_PARSER_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,3 +13,5 @@ int parse_package (const char *file);
  *	WARNING: return object must be free'd
  */
 char *substr (const char *from, int start, int len);
+
+#endif /* _PACKAGE_PARSER_H_ */
