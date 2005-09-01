@@ -17,3 +17,26 @@ char* string_find (char *str, char ch)
 
 	return ptr;
 }
+
+void string_split (const char *string, char *left, char *right, char token)
+{
+	int i = 0;
+	char *token_pos = string_find ((char *)string, token);
+	
+	/* True if no token is found witch means not
+	 * a valid string
+	 */
+	if (token_pos == string)
+		return;
+	
+	while ((string + i) != token_pos)
+	{
+		left[i] = string[i];
+		++i;
+	}
+	
+	left[i] = '\0';
+
+	/* Note: This is not godd! */
+	strncpy (right, token_pos + 1, 200);
+}

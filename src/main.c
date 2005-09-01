@@ -49,7 +49,7 @@ void print_help ()
 	printf ("PacBox v 0.1\n");
 	printf ("\t-h\t--help\t Prints this help text\n");
 	printf ("\n Keywords\n");
-	printf ("\tinfo\t Prints compiler info and other\n");
+	printf ("\tinfo\t Prints pacbox info and other\n");
 }
 
 void print_info ()
@@ -68,12 +68,19 @@ void print_info ()
 	while (fgets (buffer, sizeof (buffer), fd))
 	{
 		char right[512];
-		/*char left[100];*/
-		char *tmp = string_find (buffer, '=');
-		strncpy (right, tmp + 1, sizeof (right));
-		*tmp = '\0';
-		printf ("%s: %s", buffer, right);
-
+		char left[50];
+	
+		/* Ignores empty lines */
+		if (buffer[0] != '\n')
+		{
+			/* Splits the string on = */
+			string_split (buffer, left, right, '=');
+			printf ("%s: %s", left, right);
+		}
+		else
+		{
+			/* printf ("Ignoring: %s", buffer); */
+		}
 	}
 	
 	/* Closes the file handler */
