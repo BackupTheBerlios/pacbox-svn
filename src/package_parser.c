@@ -2,15 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
+#include "package_parser.h"
 
+/* Parses a package file */
 int parse_package (const char *file)
 {
-/*	package paket;	*/
-	
 	FILE *package;
 	char buf[512];
-	int i = 0;
+/*	int i = 0; */
 
 	if ((package = fopen(file, "r")) == NULL)
 	{
@@ -63,9 +62,9 @@ int parse_package (const char *file)
  */
 char *substr (const char *str, int start, int len)
 {
+	int i = 0;
 	char *tmp;
 	tmp = (char *) malloc(len+1);
-	int i = 0;
 
 	for (i=0; i<len; i++)
 	{
@@ -74,15 +73,4 @@ char *substr (const char *str, int start, int len)
 	tmp[len] = '\0';
 
 	return tmp;
-}
-
-
-/*
- * strips whitespace from both edges of a string
- * WARNING: modifies original string
- */
-void string_trim (char *str)
-{
-	:q
-
 }
