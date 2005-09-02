@@ -35,9 +35,13 @@ int main (int argc, char **argv)
 		{
 			print_info ();
 		}
-		else	/* It is a package */
+		/*
+		else if ()
+		*/
+		else	
 		{
-			/* mr_echo: do your thing here! */
+			/* Not a valid package or keyword */
+			printf ("Not a valid keyword/package\n");
 		}
 	}
 	
@@ -46,12 +50,12 @@ int main (int argc, char **argv)
 
 void print_usage (const char *name)
 {
-	printf ("Usage: %s [args] package\n", name);
+	printf ("Usage:\t%s [args] package or\n\t%s [keyword]\n\n", name, name);
 }
 
 void print_help ()
 {
-	printf ("PacBox v 0.1\n");
+	printf ("Args\n");
 	printf ("\t-h\t--help\t Prints this help text\n");
 	printf ("\n Keywords\n");
 	printf ("\tinfo\t Prints pacbox info and other\n");
