@@ -6,5 +6,9 @@ typedef struct GlobalConfig {
 /* Sets all the elements to default values */
 void global_config_set_defaults (GlobalConfig *config);
 
+/* Prints out configto stdout */
+void global_config_print (GlobalConfig *config);
+
 /* Clears the config */
 void global_config_destroy (GlobalConfig *config);
+

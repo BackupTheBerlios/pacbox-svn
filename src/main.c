@@ -22,8 +22,6 @@ void print_help ();
 void print_info ();
 
 
-void print_conf (GlobalConfig *conf);
-
 int main (int argc, char **argv)
 {
 	GlobalConfig conf;
@@ -37,10 +35,13 @@ int main (int argc, char **argv)
 	}
 	else
 	{
+		/* TODO: This suxs, fix it! */
+
+
 		/* Checks if the argument is a keyword */
 		if (strcmp (argv[1], "info") == 0)
 		{
-			print_conf (&conf);
+			global_config_print (&conf);
 		}
 		/*
 		else if ()
@@ -125,8 +126,3 @@ void print_info ()
 	free (list);
 }
 
-void print_conf (GlobalConfig *conf)
-{
-	printf ("Cports base dir: %s\n", conf->base_dir);
-	printf ("CFLAGS: %s\n", conf->cflags);	
-}
