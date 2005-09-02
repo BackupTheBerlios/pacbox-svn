@@ -63,6 +63,7 @@ void print_info ()
 	FILE *fd;
 	LinkedList *list = malloc (sizeof (LinkedList));
 	ListNode *it;	
+	
 	/* Creates the list */
 	list_init (list);
 	
@@ -70,8 +71,7 @@ void print_info ()
 	fd = fopen ("make.conf", "r");
 	
 	/* Fetches the line from file
-	 * and prints it to the console
-	 */
+	 * and prints it to the console */
 	while (fgets (buffer, sizeof (buffer), fd))
 	{
 		ListNode *node = malloc (sizeof (ListNode));
@@ -88,10 +88,6 @@ void print_info ()
 			list_add_node (list, node);
 
 		}
-		else
-		{
-			/* printf ("Ignoring: %s", buffer); */
-		}
 	}
 	
 	/* Prints all the configs */
@@ -107,6 +103,8 @@ void print_info ()
 	/* Closes the file handler */
 	fclose (fd);
 	
+	/* Clears the list and clear the
+	 * used memory */
 	list_clear (list);
 	free (list);
 }

@@ -3,9 +3,9 @@
 
 /* Struct for a node */
 typedef struct _ListNode {
-	struct _ListNode *prev;
-	void *data;
-	struct _ListNode *next;
+	struct _ListNode *prev; /* A pointer to the previus node */
+	void *data;				/* pointer to the data of the node */
+	struct _ListNode *next;	/* Pointer to the next node */
 } ListNode;
 
 typedef struct _LinkedList {
@@ -20,7 +20,7 @@ void list_init (LinkedList *list);
 /* Adds a node in the back of the list */
 void list_add_node (LinkedList *list, ListNode *node);
 
-/* Clears the list */
+/* Clears the list and removes any used memory */
 void list_clear (LinkedList *list);
 
 #endif /* _LINKED_LIST_H_ */
