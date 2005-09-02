@@ -20,7 +20,7 @@ int parse_package (const char *file)
 
 	while (fgets(buf, sizeof(buf), package))
 	{
-		/* Strip whitespace */
+		/* Trim whitespace */
 		/* TODO */
 
 		/* If comment or empty line, skip it */

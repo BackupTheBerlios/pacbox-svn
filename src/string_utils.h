@@ -12,4 +12,9 @@ char * string_find (char *str, char ch);
  */
 void string_split (const char *string, char *left, char *right, char token);
 
+/* Trims whitespace from both edges of a string
+ * WARNING: Modifies existing string
+ */
+void string_trim (char *string);
+
 #endif /* _STRING_UTILS_H_ */
