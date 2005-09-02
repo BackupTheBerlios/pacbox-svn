@@ -1,5 +1,7 @@
 #include "string_utils.h"
 #include "linked_list.h"
+#include "global_config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -20,8 +22,13 @@ void print_help ();
 void print_info ();
 
 
+void print_conf (GlobalConfig *conf);
+
 int main (int argc, char **argv)
 {
+	GlobalConfig conf;
+	
+	global_config_set_defaults (&conf);
 	/* if no argument */
 	if (argc == 1)
 	{
@@ -33,7 +40,7 @@ int main (int argc, char **argv)
 		/* Checks if the argument is a keyword */
 		if (strcmp (argv[1], "info") == 0)
 		{
-			print_info ();
+			print_conf (&conf);
 		}
 		/*
 		else if ()
@@ -73,27 +80,32 @@ void print_info ()
 	
 	/* Opens config file for reading */
 	fd = fopen ("make.conf", "r");
-	
-	/* Fetches the line from file
-	 * and prints it to the console */
-	while (fgets (buffer, sizeof (buffer), fd))
+	if (fd == NULL)
 	{
-		ListNode *node = malloc (sizeof (ListNode));
-	
-		ConfigLine *cl = malloc (sizeof (ConfigLine));
-
-		/* Ignores empty lines */
-		if (buffer[0] != '\n')
+		printf ("Failed to open make.conf for reading\n");
+	}
+	else
+	{
+		/* Fetches the line from file
+		 * and prints it to the console */
+		while (fgets (buffer, sizeof (buffer), fd))
 		{
-			/* Splits the string on = */
-			string_split (buffer, cl->left, cl->right, '=');
+			ListNode *node = malloc (sizeof (ListNode));
+	
+			ConfigLine *cl = malloc (sizeof (ConfigLine));
 
-			node->data = cl;
-			list_add_node (list, node);
+			/* Ignores empty lines */
+			if (buffer[0] != '\n')
+			{
+				/* Splits the string on = */
+				string_split (buffer, cl->left, cl->right, '=');
 
+				node->data = cl;
+				list_add_node (list, node);
+			}
 		}
 	}
-	
+
 	/* Prints all the configs */
 	it = list->first;
 	for (it = list->first; it != list->last->next; it = it->next)
@@ -113,3 +125,8 @@ void print_info ()
 	free (list);
 }
 
+void print_conf (GlobalConfig *conf)
+{
+	printf ("Cports base dir: %s\n", conf->base_dir);
+	printf ("CFLAGS: %s\n", conf->cflags);	
+}
