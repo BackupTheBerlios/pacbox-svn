@@ -26,7 +26,7 @@ void string_split (const char *string, char *left, char *right, char token)
 	int i = 0;
 	char *token_pos = string_find ((char *)string, token);
 	
-	/* checks if token is not found*/
+	/* checks if token is not found */
 	if (token_pos == string)
 		return;
 	
@@ -39,7 +39,7 @@ void string_split (const char *string, char *left, char *right, char token)
 	left[i] = '\0';
 
 	/* Note: This is not godd! */
-	strncpy (right, token_pos + 1, 200);
+	strncpy (right, token_pos + 1, 500);
 }
 
 

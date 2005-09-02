@@ -1,9 +1,14 @@
 #include "string_utils.h"
-
+#include "linked_list.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
+/* Struct for containing a config line */
+typedef struct _ConfigLine {
+	char left[30];
+	char right[500];
+} ConfigLine;
 
 /* Prints the usage for the program */
 void print_usage (const char *name);
@@ -54,28 +59,34 @@ void print_help ()
 
 void print_info ()
 {
-	/* A static buffer to read a string 
-	 * line in to 
-	 */
 	char buffer[2048];
+	FILE *fd;
+	LinkedList *list = malloc (sizeof (LinkedList));
+	ListNode *it;	
+	/* Creates the list */
+	list_init (list);
 	
 	/* Opens config file for reading */
-	FILE *fd = fopen ("make.conf", "r");
+	fd = fopen ("make.conf", "r");
 	
 	/* Fetches the line from file
 	 * and prints it to the console
 	 */
 	while (fgets (buffer, sizeof (buffer), fd))
 	{
-		char right[512];
-		char left[50];
+		ListNode *node = malloc (sizeof (ListNode));
 	
+		ConfigLine *cl = malloc (sizeof (ConfigLine));
+
 		/* Ignores empty lines */
 		if (buffer[0] != '\n')
 		{
 			/* Splits the string on = */
-			string_split (buffer, left, right, '=');
-			printf ("%s: %s", left, right);
+			string_split (buffer, cl->left, cl->right, '=');
+
+			node->data = cl;
+			list_add_node (list, node);
+
 		}
 		else
 		{
@@ -83,7 +94,20 @@ void print_info ()
 		}
 	}
 	
+	/* Prints all the configs */
+	it = list->first;
+	for (it = list->first; it != list->last->next; it = it->next)
+	{
+		printf ("%s: %s", 
+				((ConfigLine *)it->data)->left, 
+				((ConfigLine *)it->data)->right);
+		
+	}
+
 	/* Closes the file handler */
 	fclose (fd);
+	
+	list_clear (list);
+	free (list);
 }
 
