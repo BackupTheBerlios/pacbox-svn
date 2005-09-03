@@ -6,11 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-/* Struct for containing a config line */
-typedef struct _ConfigLine {
-	char left[30];
-	char right[500];
-} ConfigLine;
+#define PACKAGE_VERSION "0.0.1"
 
 /* Prints the usage for the program */
 void print_usage (const char *name);
@@ -18,11 +14,8 @@ void print_usage (const char *name);
 /* Prints the helptext */
 void print_help ();
 
-/* Prints info for the compile and so forth 
- * Warning: This function is deprecated in favor
- * of global_config_print() */
-void print_info ();
-
+/* Prints info for the compile and so forth */
+void print_info (GlobalConfig *conf);
 
 int main (int argc, char **argv)
 {
@@ -43,8 +36,10 @@ int main (int argc, char **argv)
 		/* Checks if the argument is a keyword */
 		if (strcmp (argv[1], "info") == 0)
 		{
-			global_config_print (&conf);
+			print_info (&conf);
 		}
+		/* This is a verry ugly hack, but i don't know any better
+		 * yet */
 		else if (argv[1][0] == '-' || (argv[1][0] == '-' && argv[1][1] == '-'))
 		{
 			if (strcmp (argv[1], "-h") == 0 || strcmp (argv[1], "--help") == 0)
@@ -74,60 +69,10 @@ void print_help ()
 	printf ("\tinfo\t Prints pacbox info and other\n");
 }
 
-void print_info ()
+void print_info (GlobalConfig *conf)
 {
-	char buffer[2048];
-	FILE *fd;
-	LinkedList *list = malloc (sizeof (LinkedList));
-	ListNode *it;	
+	printf ("%s %s\n", PACKAGE_NAME, PACKAGE_VERSION);
+	global_config_print (conf);
 	
-	/* Creates the list */
-	list_init (list);
-	
-	/* Opens config file for reading */
-	fd = fopen ("make.conf", "r");
-	if (fd == NULL)
-	{
-		printf ("Failed to open make.conf for reading\n");
-	}
-	else
-	{
-		/* Fetches the line from file
-		 * and prints it to the console */
-		while (fgets (buffer, sizeof (buffer), fd))
-		{
-			ListNode *node = malloc (sizeof (ListNode));
-	
-			ConfigLine *cl = malloc (sizeof (ConfigLine));
-
-			/* Ignores empty lines */
-			if (buffer[0] != '\n')
-			{
-				/* Splits the string on = */
-				string_split (buffer, cl->left, cl->right, '=');
-
-				node->data = cl;
-				list_add_node (list, node);
-			}
-		}
-	}
-
-	/* Prints all the configs */
-	it = list->first;
-	for (it = list->first; it != list->last->next; it = it->next)
-	{
-		printf ("%s: %s", 
-				((ConfigLine *)it->data)->left, 
-				((ConfigLine *)it->data)->right);
-		
-	}
-
-	/* Closes the file handler */
-	fclose (fd);
-	
-	/* Clears the list and clear the
-	 * used memory */
-	list_clear (list);
-	free (list);
 }
 
