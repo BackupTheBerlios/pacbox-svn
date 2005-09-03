@@ -18,7 +18,9 @@ void print_usage (const char *name);
 /* Prints the helptext */
 void print_help ();
 
-/* Prints info for the compile and so forth */
+/* Prints info for the compile and so forth 
+ * Warning: This function is deprecated in favor
+ * of global_config_print() */
 void print_info ();
 
 
@@ -27,6 +29,7 @@ int main (int argc, char **argv)
 	GlobalConfig conf;
 	
 	global_config_set_defaults (&conf);
+	
 	/* if no argument */
 	if (argc == 1)
 	{
@@ -37,15 +40,16 @@ int main (int argc, char **argv)
 	{
 		/* TODO: This suxs, fix it! */
 
-
 		/* Checks if the argument is a keyword */
 		if (strcmp (argv[1], "info") == 0)
 		{
 			global_config_print (&conf);
 		}
-		/*
-		else if ()
-		*/
+		else if (argv[1][0] == '-' || (argv[1][0] == '-' && argv[1][1] == '-'))
+		{
+			if (strcmp (argv[1], "-h") == 0 || strcmp (argv[1], "--help") == 0)
+				print_help ();
+		}
 		else	
 		{
 			/* Not a valid package or keyword */
@@ -53,6 +57,7 @@ int main (int argc, char **argv)
 		}
 	}
 	
+	global_config_destroy (&conf);
 	return 0;
 }
 
