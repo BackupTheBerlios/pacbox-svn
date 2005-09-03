@@ -17,40 +17,59 @@ void print_help ();
 /* Prints info for the compile and so forth */
 void print_info (GlobalConfig *conf);
 
+typedef struct Args {
+	int verbose;
+	int ask;
+} Args;
+
 int main (int argc, char **argv)
 {
 	GlobalConfig conf;
-	
+	Args args = {0, 0};
 	global_config_set_defaults (&conf);
-	
-	/* if no argument */
+
 	if (argc == 1)
 	{
-		print_usage (argv[0]);
 		print_help ();
 	}
 	else
 	{
-		/* TODO: This suxs, fix it! */
+		int it;
+		
+		if (argc == 2)
+		{
+			if (strcmp (argv[1], "info") == 0)
+				print_info (&conf);
+		}
+		else /* argc > 2 */
+		{
+			for (it = 1; it < argc; ++it)
+			{
+				/* It is a argument */
+				if (strlen (argv[it]) == 2)	
+				{
+					if (argv[it][1] == 'v')
+						args.verbose++;
+				
+					if (argv[it][1] == 'a')
+						args.ask = 1; 
+				}
+			}
 
-		/* Checks if the argument is a keyword */
-		if (strcmp (argv[1], "info") == 0)
-		{
-			print_info (&conf);
-		}
-		/* This is a verry ugly hack, but i don't know any better
-		 * yet */
-		else if (argv[1][0] == '-' || (argv[1][0] == '-' && argv[1][1] == '-'))
-		{
-			if (strcmp (argv[1], "-h") == 0 || strcmp (argv[1], "--help") == 0)
-				print_help ();
-		}
-		else	
-		{
-			/* Not a valid package or keyword */
-			printf ("Not a valid keyword/package\n");
+			if (args.verbose > 0)
+			{
+				printf ("Using verbose: ON\n");
+			}
+			
+			if (args.ask == 1)
+			{
+				char c;
+				printf ("Want to install these packages? [Y/n] ");
+				scanf ("%c", &c);
+			}
 		}
 	}
+	
 	
 	global_config_destroy (&conf);
 	return 0;
@@ -64,8 +83,8 @@ void print_usage (const char *name)
 void print_help ()
 {
 	printf ("Args\n");
-	printf ("\t-h\t--help\t Prints this help text\n");
-	printf ("\n Keywords\n");
+	printf ("\t-h\t Prints this help text\n");
+	printf ("\nKeywords\n");
 	printf ("\tinfo\t Prints pacbox info and other\n");
 }
 
