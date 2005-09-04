@@ -66,6 +66,11 @@ int main (int argc, char **argv)
 				char c;
 				printf ("Want to install these packages? [Y/n] ");
 				scanf ("%c", &c);
+			
+				if (c == 'y' || c == 'Y')
+				{	
+					printf ("Installing....\n");
+				}
 			}
 		}
 	}
@@ -84,6 +89,8 @@ void print_help ()
 {
 	printf ("Args\n");
 	printf ("\t-h\t Prints this help text\n");
+	printf ("\t-a\t Asks first if you want to install\n");
+	printf ("\t-v\t Prints some more output\n");
 	printf ("\nKeywords\n");
 	printf ("\tinfo\t Prints pacbox info and other\n");
 }
