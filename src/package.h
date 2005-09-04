@@ -1,5 +1,5 @@
-#ifndef _PACKAGE_PARSER_H_
-#define _PACKAGE_PARSER_H_
+#ifndef _PACKAGE_H_
+#define _PACKAGE_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,4 +33,4 @@ int parse_package (const char *file);
  */
 char *substr (const char *from, int start, int len);
 
-#endif /* _PACKAGE_PARSER_H_ */
+#endif /* _PACKAGE_H_ */

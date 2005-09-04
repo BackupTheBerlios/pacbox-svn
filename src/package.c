@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "package_parser.h"
+#include "package.h"
 #include "string_utils.h"
-#include "linked_list.h"
 
 
 void package_init (Package *package)
@@ -58,7 +57,7 @@ int parse_package (const char *file)
 		}
 
 		/* Split on = */
-		string_split (buf, cl->left, cl->right, '=');
+/*		string_split (buf, cl->left, cl->right, '=');*/
 
 	}
 	
