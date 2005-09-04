@@ -6,6 +6,18 @@
 #include "string_utils.h"
 
 
+void package_install (char *package)
+{
+	/*
+	package_get_info
+	package_installed
+	package_check_deps
+	package_build
+	package_register	
+	*/
+}
+
+
 void package_init (Package *package)
 {
 	package->name = 0;

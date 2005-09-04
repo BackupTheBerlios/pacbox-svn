@@ -73,7 +73,7 @@ int main (int argc, char **argv)
 					printf ("Installing....\n");
 				}
 			}
-			parse_package("/home/erik/Desktop/pacbox/echo/PACKAGE");
+			package_install("/home/erik/Desktop/pacbox/echo/PACKAGE");
 		}
 	}
 	

@@ -18,11 +18,16 @@ typedef struct Package {
 } Package;
 
 
+/* Main function for installing packages */
+void package_install (char *package);
+
+
 /* Init's a struct of type Package */
 void package_init (Package *package);
 
 /* Destoy's and free's memory for a Package struct */
 void package_destroy (Package *package);
+
 
 /* Parses a package file */
 int parse_package (const char *file);
