@@ -3,13 +3,41 @@
 #include <string.h>
 
 #include "package_parser.h"
+#include "string_utils.h"
+#include "linked_list.h"
+
+
+void package_init (Package *package)
+{
+	package->name = 0;
+	package->version = 0;
+	package->release = 0;
+	package->category = 0;
+	package->description = 0;
+	package->dependencies = 0;
+	package->build_dependencies = 0;
+	package->url = 0;
+}
+
+
+void package_destroy (Package *package)
+{
+	free (package->name);
+	free (package->version);
+	free (package->release);
+	free (package->category);
+	free (package->description);
+	free (package->dependencies);
+	free (package->build_dependencies);
+	free (package->url);
+}
+
 
 /* Parses a package file */
 int parse_package (const char *file)
 {
 	FILE *package;
 	char buf[512];
-/*	int i = 0; */
 
 	if ((package = fopen(file, "r")) == NULL)
 	{
@@ -21,7 +49,7 @@ int parse_package (const char *file)
 	while (fgets(buf, sizeof(buf), package))
 	{
 		/* Trim whitespace */
-		/* TODO */
+/*		string_trim (buf);*/
 
 		/* If comment or empty line, skip it */
 		if ((buf[0] == '#') || (buf[0] == '\n'))
@@ -29,29 +57,14 @@ int parse_package (const char *file)
 			continue;
 		}
 
-		printf(buf);
+		/* Split on = */
+		string_split (buf, cl->left, cl->right, '=');
 
-		/* Get the stuff */
-/*		for (i=0; i<strlen(buf); i++)
-		{
-			if (buf[i] == '=')
-			{
-				char *tmp;
-
-				* Key *
-				tmp = substr (buf, 0, i);
-				printf(tmp);
-				free(tmp);
-
-				* Value *
-				tmp = substr (buf, i+1, strlen(buf));
-				printf(tmp);
-				free(tmp);
-			}
-		}*/
 	}
 	
-	fclose(package);
+	/* Close file */
+	fclose (package);
+
 	return 0;
 }
 
