@@ -6,8 +6,15 @@
 #include "string_utils.h"
 
 
-void package_install (char *package)
+void package_install (char *name)
 {
+	Package package;
+	package_init (&package);
+
+	/* Get info */
+	package_get_info (&package);
+
+
 	/*
 	package_get_info
 	package_installed
@@ -15,68 +22,44 @@ void package_install (char *package)
 	package_build
 	package_register	
 	*/
+	package_destroy (&package);
 }
 
 
-void package_init (Package *package)
+void package_get_info (Package *package)
 {
-	package->name = 0;
-	package->version = 0;
-	package->release = 0;
-	package->category = 0;
-	package->description = 0;
-	package->dependencies = 0;
-	package->build_dependencies = 0;
-	package->url = 0;
-}
-
-
-void package_destroy (Package *package)
-{
-	free (package->name);
-	free (package->version);
-	free (package->release);
-	free (package->category);
-	free (package->description);
-	free (package->dependencies);
-	free (package->build_dependencies);
-	free (package->url);
-}
-
-
-/* Parses a package file */
-int parse_package (const char *file)
-{
-	FILE *package;
+	FILE *file;
 	char buf[512];
 
-	if ((package = fopen(file, "r")) == NULL)
+	/* must get path to package file */
+/*
+	if ((file = fopen(file, "r")) == NULL)
 	{
-		/* No such file or directory */
 		printf("Error opening file: %s", file);
 		return 1;
 	}
-
+*/
+/*
 	while (fgets(buf, sizeof(buf), package))
 	{
-		/* Trim whitespace */
-/*		string_trim (buf);*/
+		Trim whitespace
+		string_trim (buf);
 
-		/* If comment or empty line, skip it */
 		if ((buf[0] == '#') || (buf[0] == '\n'))
 		{
 			continue;
 		}
-
+*/
 		/* Split on = */
 /*		string_split (buf, cl->left, cl->right, '=');*/
-
+/*
 	}
+*/
 	
 	/* Close file */
-	fclose (package);
+/*	fclose (package);*/
 
-	return 0;
+/*	return 0;*/
 }
 
 
@@ -97,4 +80,29 @@ char *substr (const char *str, int start, int len)
 	tmp[len] = '\0';
 
 	return tmp;
+}
+
+
+void package_init (Package *package)
+{
+	package->name = 0;
+	package->version = 0;
+	package->release = 0;
+	package->category = 0;
+	package->description = 0;
+	package->dependencies = 0;
+	package->build_dependencies = 0;
+	package->url = 0;
+}
+
+
+void package_destroy (Package *package)
+{
+	free (package->name);
+	free (package->version);
+	free (package->category);
+	free (package->description);
+	free (package->dependencies);
+	free (package->build_dependencies);
+	free (package->url);
 }

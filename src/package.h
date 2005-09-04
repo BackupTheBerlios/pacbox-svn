@@ -19,7 +19,12 @@ typedef struct Package {
 
 
 /* Main function for installing packages */
-void package_install (char *package);
+void package_install (char *name);
+
+/* Parse packagefile and put into struct */
+void package_get_info (Package *package);
+
+
 
 
 /* Init's a struct of type Package */
