@@ -4,6 +4,12 @@
 #include <stdio.h>
 #include <string.h>
 
+void global_config_init (GlobalConfig *config)
+{
+	config->cflags = 0;
+	config->base_dir = 0;
+}
+
 void global_config_set_defaults (GlobalConfig *config)
 {
 	/* Don't know witch way to do this 
@@ -13,12 +19,12 @@ void global_config_set_defaults (GlobalConfig *config)
 	strcpy (config->cflags, cflags);
 
 	config->base_dir = calloc (50, sizeof (char));
-	strcpy (config->base_dir, "/usr/cports");
+	strcpy (config->base_dir, "/usr/pacbox");
 }
 
 void global_config_print (GlobalConfig *config)
 {
-	printf ("Cports base dir: %s\n", config->base_dir);
+	printf ("Pacbox base dir: %s\n", config->base_dir);
 	printf ("CFLAGS: %s\n", config->cflags);	
 }
 

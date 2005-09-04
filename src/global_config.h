@@ -3,6 +3,9 @@ typedef struct GlobalConfig {
 	char *base_dir;			/* Path to the package base		*/
 } GlobalConfig;
 
+/* Sets the struct to default values */
+void global_config_init (GlobalConfig *config);
+
 /* Sets all the elements to default values */
 void global_config_set_defaults (GlobalConfig *config);
 
