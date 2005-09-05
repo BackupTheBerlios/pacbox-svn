@@ -7,4 +7,4 @@ pacbox_SOURCES = main.c \
 				 global_config.c
 				 
 
-pacbox_CFLAGS = -ansi -pedantic -Wall 
+pacbox_CFLAGS = -std=c99 -pedantic -Wall 

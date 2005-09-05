@@ -150,7 +150,7 @@ int package_is_installed (Package *package, GlobalConfig *config)
 	struct stat tmp;
 
 	/* TODO snprintf must die. (According to Highlander. All rights reserved etc.) */
-	snprintf (&path, sizeof(path), "%s/%s-%s", config->db_dir, package->name, package->version);
+	snprintf (path, sizeof(path), "%s/%s-%s", config->db_dir, package->name, package->version);
 
 	if (stat (path, &tmp) == -1)
 	{
