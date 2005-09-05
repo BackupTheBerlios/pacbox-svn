@@ -1,3 +1,6 @@
+#ifndef _GLOBAL_CONFIG_H_
+#define _GLOBAL_CONFIG_H_
+
 typedef struct GlobalConfig {
 	char *cflags;			/* A string containing cflags	*/
 	char *base_dir;			/* Path to the package base		*/
@@ -15,3 +18,4 @@ void global_config_print (GlobalConfig *config);
 /* Clears the config */
 void global_config_destroy (GlobalConfig *config);
 
+#endif 
