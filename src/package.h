@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "global_config.h"
+
 
 typedef struct Package {
 	char *name;
@@ -19,10 +21,10 @@ typedef struct Package {
 
 
 /* Main function for installing packages */
-void package_install (char *name);
+void package_install (char *name, GlobalConfig *config);
 
 /* Parse packagefile and put into struct */
-void package_get_info (Package *package);
+int package_get_info (Package *package);
 
 
 

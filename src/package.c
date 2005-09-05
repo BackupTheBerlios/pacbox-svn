@@ -6,13 +6,16 @@
 #include "string_utils.h"
 
 
-void package_install (char *name)
+void package_install (char *name, GlobalConfig *config)
 {
 	Package package;
 	package_init (&package);
 
 	/* Get info */
-	package_get_info (&package);
+	if (package_get_info (&package) > 0)
+	{
+		printf ("Error parsing package file");
+	}
 
 
 	/*
@@ -26,40 +29,46 @@ void package_install (char *name)
 }
 
 
-void package_get_info (Package *package)
+int package_get_info (Package *package)
 {
 	FILE *file;
+	char *path;
+
 	char buf[512];
 
-	/* must get path to package file */
-/*
-	if ((file = fopen(file, "r")) == NULL)
+	/* TODO must get path to package file */
+	path = "/home/erik/Desktop/pacbox/PACKAGE";
+
+
+	if ((file = fopen(path, "r")) == NULL)
 	{
-		printf("Error opening file: %s", file);
+		printf("Error opening file: %s", path);
 		return 1;
 	}
-*/
-/*
-	while (fgets(buf, sizeof(buf), package))
+
+
+	while (fgets(buf, sizeof(buf), file))
 	{
-		Trim whitespace
+		/* Trim whitespace */
 		string_trim (buf);
 
 		if ((buf[0] == '#') || (buf[0] == '\n'))
 		{
 			continue;
 		}
-*/
+
+		printf(buf);
+
 		/* Split on = */
 /*		string_split (buf, cl->left, cl->right, '=');*/
-/*
+
 	}
-*/
+
 	
 	/* Close file */
-/*	fclose (package);*/
+	fclose (file);
 
-/*	return 0;*/
+	return 0;
 }
 
 
