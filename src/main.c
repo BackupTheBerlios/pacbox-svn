@@ -1,4 +1,4 @@
-#include "package_parser.h"
+#include "package.h"
 #include "string_utils.h"
 #include "linked_list.h"
 #include "global_config.h"
@@ -73,7 +73,7 @@ int main (int argc, char **argv)
 					printf ("Installing....\n");
 				}
 			}
-			package_install("/home/erik/Desktop/pacbox/echo/PACKAGE");
+			package_install("/home/erik/Desktop/pacbox/echo/PACKAGE", &conf);
 		}
 	}
 	

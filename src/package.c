@@ -33,8 +33,10 @@ int package_get_info (Package *package)
 {
 	FILE *file;
 	char *path;
-
 	char buf[512];
+	/* Size of temporary pointers which will hold the result from string_split */
+/*	char *line_left[50];
+	char *line_right[512];*/
 
 	/* TODO must get path to package file */
 	path = "/home/erik/Desktop/pacbox/PACKAGE";
@@ -60,8 +62,11 @@ int package_get_info (Package *package)
 		printf(buf);
 
 		/* Split on = */
-/*		string_split (buf, cl->left, cl->right, '=');*/
+/*		string_split (buf, line_left, line_right, '=');*/
 
+		/* Check which key we got */
+/*		if (strcmp(line_left, "NAME") == 0)
+			package->name = calloc(sizeof(buf), sizeof(char));*/
 	}
 
 	

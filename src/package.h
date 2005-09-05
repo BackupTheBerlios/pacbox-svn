@@ -7,7 +7,6 @@
 
 #include "global_config.h"
 
-
 typedef struct Package {
 	char *name;
 	char *version;

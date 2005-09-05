@@ -19,3 +19,4 @@ void global_config_print (GlobalConfig *config);
 void global_config_destroy (GlobalConfig *config);
 
 #endif 
+
