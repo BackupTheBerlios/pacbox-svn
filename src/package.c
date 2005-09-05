@@ -42,13 +42,12 @@ int package_get_info (Package *package)
 	FILE *file;
 	char *path;
 	char buf[512];
-	/* Size of temporary pointers which will hold the result from string_split */
+	/* Size of temporary variables which will hold the result from string_split */
 	char line_left[50];
 	char line_right[512];
 
 	/* TODO must get path to package file */
 	path = "/home/erik/Desktop/pacbox/PACKAGE";
-
 
 	if ((file = fopen(path, "r")) == NULL)
 	{
@@ -56,12 +55,12 @@ int package_get_info (Package *package)
 		return 1;
 	}
 
-
 	while (fgets(buf, sizeof(buf), file))
 	{
 		/* Trim whitespace */
 		string_trim (buf);
 
+		/* Skip comments and empty lines */
 		if ((buf[0] == '#') || (buf[0] == '\n'))
 		{
 			continue;
@@ -80,38 +79,42 @@ int package_get_info (Package *package)
 			package->name = calloc (sizeof(buf), sizeof(char));
 			strncpy (package->name, line_right, sizeof(buf));
 		}
+		/* VERSION */
 		else if (strcmp(line_left, "VERSION") == 0)
 		{
 			package->version = calloc (sizeof(buf), sizeof(char));
 			strncpy (package->version, line_right, sizeof(buf));
 		}
+		/* RELEASE */
 		else if (strcmp(line_left, "RELEASE") == 0)
 		{
-			/* TODO How to get release number into struct? */
-			/* package->release = (int *) line_right; */
-			package->release = 1;
+			sscanf(line_right, "%i", &package->release);
 		}
+		/* CATEGORY */
 		else if (strcmp(line_left, "CATEGORY") == 0)
 		{
 			package->category = calloc (sizeof(buf), sizeof(char));
 			strncpy (package->category, line_right, sizeof(buf));
 		}
+		/* DESCRIPTION */
 		else if (strcmp(line_left, "DESCRIPTION") == 0)
 		{
 			package->description = calloc (sizeof(buf), sizeof(char));
 			strncpy (package->description, line_right, sizeof(buf));
 		}
+		/* DEPENDENCIES */
 		else if (strcmp(line_left, "DEPENDENCIES") == 0)
 		{
 			package->dependencies = calloc (sizeof(buf), sizeof(char));
 			strncpy (package->dependencies, line_right, sizeof(buf));
 		}
+		/* BUILD_DEPENDENCIES */
 		else if (strcmp(line_left, "BUILD_DEPENDENCIES") == 0)
 		{
 			package->build_dependencies = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->build_dependencies, line_right,
-					 sizeof(buf));
+			strncpy (package->build_dependencies, line_right, sizeof(buf));
 		}
+		/* URL */
 		else if (strcmp(line_left, "URL") == 0)
 		{
 			package->url = calloc (sizeof(buf), sizeof(char));
@@ -125,26 +128,6 @@ int package_get_info (Package *package)
 	fclose (file);
 
 	return 0;
-}
-
-
-/*
- *	returns substring from str, using start and len
- *	WARNING: return object must be free'd
- */
-char *substr (const char *str, int start, int len)
-{
-	int i = 0;
-	char *tmp;
-	tmp = (char *) malloc(len+1);
-
-	for (i=0; i<len; i++)
-	{
-		tmp[i] = str[start+i];
-	}
-	tmp[len] = '\0';
-
-	return tmp;
 }
 
 
