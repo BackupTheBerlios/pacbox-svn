@@ -1,22 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include "package.h"
 #include "string_utils.h"
 
 
-void package_install (char *name, GlobalConfig *config)
+int package_install (char *name, GlobalConfig *config)
 {
 	Package package;
 	package_init (&package);
 
 	/* Get info */
-	if (package_get_info (&package) > 0)
+	if (package_get_info (&package) < 0)
 	{
-		printf ("Error parsing package file");
+		printf ("Error parsing package file\n");
+		return -1;
 	}
 
+	/* Uncomment this to show package data
 	printf ("%s\n", package.name);
 	printf ("%s\n", package.version);
 	printf ("%i\n", package.release);
@@ -25,15 +28,26 @@ void package_install (char *name, GlobalConfig *config)
 	printf ("%s\n", package.dependencies);
 	printf ("%s\n", package.build_dependencies);
 	printf ("%s\n", package.url);
+	*/
+
+
+	if (package_is_installed (&package, config) == 0)
+	{
+		printf ("Package is already installed\n");
+		return -1;
+	}
+
+	printf ("Everything is OK. Let's install it! :)\n");
 
 	/*
-	package_get_info
-	package_installed
+	package_is_installed
 	package_check_deps
 	package_build
 	package_register	
 	*/
 	package_destroy (&package);
+
+	return 0;
 }
 
 
@@ -52,7 +66,7 @@ int package_get_info (Package *package)
 	if ((file = fopen(path, "r")) == NULL)
 	{
 		printf("Error opening file: %s", path);
-		return 1;
+		return -1;
 	}
 
 	while (fgets(buf, sizeof(buf), file))
@@ -122,12 +136,32 @@ int package_get_info (Package *package)
 		}
 			
 	}
-
 	
 	/* Close file */
 	fclose (file);
 
 	return 0;
+}
+
+
+int package_is_installed (Package *package, GlobalConfig *config)
+{
+	char path[512];
+	struct stat tmp;
+
+	/* TODO snprintf must die. (According to Highlander. All rights reserved etc.) */
+	snprintf (&path, sizeof(path), "%s/%s-%s", config->db_dir, package->name, package->version);
+
+	if (stat (path, &tmp) == -1)
+	{
+		/* Path doesn't exist */
+		return -1;
+	}
+	else
+	{
+		/* Path does exist */
+		return 0;
+	}
 }
 
 
