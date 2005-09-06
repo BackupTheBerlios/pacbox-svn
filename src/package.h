@@ -28,6 +28,8 @@ int package_get_info (Package *package);
 /* Check if a package already is installed */
 int package_is_installed (Package *package, GlobalConfig *config);
 
+/* Check and install deps for a package */
+int package_install_deps (Package *package);
 
 /* Init's a struct of type Package */
 void package_init (Package *package);

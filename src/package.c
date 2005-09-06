@@ -19,7 +19,7 @@ int package_install (char *name, GlobalConfig *config)
 		return -1;
 	}
 
-	/* Uncomment this to show package data
+	/* Uncomment this to show package data 
 	printf ("%s\n", package.name);
 	printf ("%s\n", package.version);
 	printf ("%i\n", package.release);
@@ -27,9 +27,7 @@ int package_install (char *name, GlobalConfig *config)
 	printf ("%s\n", package.description);
 	printf ("%s\n", package.dependencies);
 	printf ("%s\n", package.build_dependencies);
-	printf ("%s\n", package.url);
-	*/
-
+	printf ("%s\n", package.url); */
 
 	if (package_is_installed (&package, config) == 0)
 	{
@@ -37,10 +35,15 @@ int package_install (char *name, GlobalConfig *config)
 		return -1;
 	}
 
+	if (package_install_deps (&package) < 0)
+	{
+		printf ("Problems installing dependencies\n");
+		return -1;
+	}
+
 	printf ("Everything is OK. Let's install it! :)\n");
 
 	/*
-	package_is_installed
 	package_check_deps
 	package_build
 	package_register	
@@ -149,8 +152,8 @@ int package_is_installed (Package *package, GlobalConfig *config)
 	char path[512];
 	struct stat tmp;
 
-	/* TODO snprintf must die. (According to Highlander. All rights reserved etc.) */
-	snprintf (path, sizeof(path), "%s/%s-%s", config->db_dir, package->name, package->version);
+	snprintf (path, sizeof(path), "%s/%s_%s_%i", config->db_dir, package->name, package->version,
+			  									 package->release);
 
 	if (stat (path, &tmp) == -1)
 	{
@@ -162,6 +165,14 @@ int package_is_installed (Package *package, GlobalConfig *config)
 		/* Path does exist */
 		return 0;
 	}
+}
+
+
+int package_install_deps (Package *package)
+{
+	/* For each dependency listed, check if it is installed.
+	 * If not, install it */
+	return 0;
 }
 
 
