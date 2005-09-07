@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "linked_list.h"
+
 char* string_find (char *str, char ch)
 {
 	int length = strlen (str);
@@ -88,40 +90,55 @@ void string_trim (char *string)
     string[j+1-i] = '\0';
 }
 
-int string_split_tokens (char *str, 
-						 char *tokens, 
-						 char **list, 
-						 int *length)
+LinkedList* string_split_tokens (char *str, char *tokens)
 {
+	ListNode *node;
+	LinkedList *list = malloc (sizeof (LinkedList));
 	int i;
 	int counter = 0;
 	int found = 0;
 	char *current_pos = str;
 	int str_len = strlen (str);
-	*length = 0;
 
+	list_init (list);
+	
 	for (i = 0; i < str_len; ++i)
 	{
 		if (string_find_ch (tokens, str[i]))
 		{
-			list[*length] = malloc (counter * sizeof (char));
-			strncpy (list[*length], current_pos, counter);
+			char *tmp;
+			node = malloc (sizeof (ListNode));
 			
+			tmp = malloc ((counter + 1) * sizeof (char));
+			strncpy (tmp, current_pos, (counter));
+			tmp[counter] = '\0';
 			
-			(*length)++;
-			counter = 0;
+			node->data = tmp;
+
+			list_add_node (list, node);
+			
+			current_pos = (str + (i + 1));
 			found = 1;
-			current_pos = (str + i);
+			counter = 0;
 		}
-	
-		++counter;
+		
+		counter++;
 	}
 	
-	list[*length] = malloc (counter * sizeof (char));
-	strcpy (list[*length], current_pos);
-	(*length)++;
+	node = malloc (sizeof (ListNode));
+		
+	node->data = malloc ((counter + 1) * sizeof (char));
+	strncpy ((char*)node->data, current_pos, counter);
+			
+	list_add_node (list, node);
 
-	//printf ("List[0]: %s\n", list[0]);
-
-	return found;
+	if (found)
+		return list;
+	else
+	{
+		list_clear (list);
+		free (list);
+		return 0;
+	}
+	
 }

@@ -5,6 +5,7 @@
 
 #include "package.h"
 #include "string_utils.h"
+#include "linked_list.h"
 
 
 int package_install (char *name, GlobalConfig *config)
@@ -174,16 +175,18 @@ int package_is_installed (Package *package, GlobalConfig *config)
 
 int package_install_deps (Package *package)
 {
-	char *depslist[50];
-	int length = 0;
-
-	if (string_split_tokens (package->dependencies, " ", depslist, &length))
+	LinkedList *list;
+	
+	list  = string_split_tokens (package->dependencies, " ");
+	
+	if (list)
 	{
-		int i = 0;
+		int i;
+		ListNode *it;
 
-		for (i = 0; i < length; ++i)
+		for (it = list->first, i = 0; it != list->last->next; it = it->next, ++i)
 		{
-			printf ("%i: %s\n", i+1, depslist[i]);
+			printf ("%i: %s\n", i+1, ((char*)it->data));
 		}
 	}
 	else

@@ -27,20 +27,7 @@ int main (int argc, char **argv)
 
 	if (argc == 1)
 	{
-		/*print_help ();*/
-		char tmp[] = {"bad:an;ka"};
-		char *list[50];
-		int length = 0;
-		
-		if (string_split_tokens (tmp, ";", list, &length))
-		{
-			int i;
-			
-			for (i = 0; i < length; ++i)
-			{
-				printf ("Part: %s\n", list[i]);	
-			}
-		}
+		print_help ();
 	}
 	else
 	{

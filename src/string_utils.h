@@ -1,10 +1,7 @@
 #ifndef _STRING_UTILS_H_
 #define _STRING_UTILS_H_
 
-typedef struct {
-	char *list[50];
-	int num_items;
-} StringList;
+#include "linked_list.h"
 
 /*
  * If not found the pointer to the first character
@@ -25,13 +22,7 @@ void string_split (const char *string, char *left, char *right, char token);
 void string_trim (char *string);
 
 /* Takes a string and splits it based on the tokens.
- * Puts all the string in the list argument
- * and puts the legnth of the string array
- * in the length argument.
- * Returns 1 if any tokens found, else 0 */
-int string_split_tokens (char *str, 
-						 char *tokens, 
-						 char **list, 
-						 int *length);
+ * Returns a linked list containing the strings */
+LinkedList* string_split_tokens (char *str, char *tokens);
 
 #endif /* _STRING_UTILS_H_ */
