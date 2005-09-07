@@ -208,11 +208,12 @@ int package_install_deps (Package *package)
 
 int package_fetch (Package *package, GlobalConfig *config)
 {
-	//TODO Make globalconfig contain command of download manager
-	//TODO Move checking of directories to some kind of startup-function
-	//TODO Currently just checking if /var/tmp/pacbox and /var/tmp/pacbox/distfiles
-	//     exists. I.e. /var/tmp must exist
+	/*TODO Make globalconfig contain command of download manager
+	 *TODO Move checking of directories to some kind of startup-function
+	 *TODO Currently just checking if /var/tmp/pacbox and /var/tmp/pacbox/distfiles
+	 *     exists. I.e. /var/tmp must exist */
 	char path[512];
+	char command[1024];
 	struct stat tmp;
 
 	snprintf (path, sizeof(path), "%s", config->tmp_dir);
@@ -237,8 +238,12 @@ int package_fetch (Package *package, GlobalConfig *config)
 		printf ("Created directory: %s\n", path);
 	}
 
+	/* TODO Must get filename part of url */
+	snprintf (path, sizeof(path), "%s/distfiles/%s", config->tmp_dir, "nano.tar.gz");
+	snprintf (command, sizeof(command), "wget %s -O %s", package->url, path);
+	
 	/* Fetch it */
-
+	system(command);
 
 	return 0;
 }

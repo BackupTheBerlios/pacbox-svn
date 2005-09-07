@@ -10,4 +10,4 @@ DESCRIPTION=Cool mail client
 DEPENDENCIES=glibc gdbm db openssl expat
 BUILD_DEPENDENCIES=
 
-URL=http://www.apache.org/dist/httpd/httpd-$pkgver.tar.gz
+URL=http://www.nano-editor.org/dist/v1.2/nano-1.2.5.tar.gz
