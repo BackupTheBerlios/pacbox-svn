@@ -35,7 +35,7 @@ int package_install_deps (Package *package);
 int package_fetch (Package *package, GlobalConfig *config);
 
 /* Builds a package */
-int package_build (Package *package);
+int package_build (Package *package, GlobalConfig *config);
 
 /* Init's a struct of type Package */
 void package_init (Package *package);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include "package.h"
 #include "string_utils.h"
@@ -47,15 +48,15 @@ int package_install (char *name, GlobalConfig *config)
 		printf ("Problems fetching package\n");
 		return -1;
 	}
-/*
-	if (package_build (&package) < 0)
+
+	if (package_build (&package, config) < 0)
 	{
 		printf ("Problems building package\n");
 		return -1;
 	}
 
-	printf ("Everything is OK. Let's install it! :)\n");
-*/
+/*	printf ("Everything is OK. Let's install it! :)\n");*/
+
 /*	
 	package_build
 	package_register	
@@ -238,20 +239,64 @@ int package_fetch (Package *package, GlobalConfig *config)
 		printf ("Created directory: %s\n", path);
 	}
 
+
 	/* TODO Must get filename part of url */
 	snprintf (path, sizeof(path), "%s/distfiles/%s", config->tmp_dir, "nano.tar.gz");
-	snprintf (command, sizeof(command), "wget %s -O %s", package->url, path);
 	
-	/* Fetch it */
-	system(command);
+	/* If file doesn't exist: fetch it */
+	if (stat (path, &tmp) == -1)
+	{
+		snprintf (command, sizeof(command), "wget %s -O %s", package->url, path);
+		system(command);
+	}
 
 	return 0;
 }
 
 
-int package_build (Package *package)
+int package_build (Package *package, GlobalConfig *config)
 {
+	char path1[512];
+	char path2[512];
+	char command[1024];
+	struct stat tmp;
+
+	/* EXTRACT */
+	/* TODO Must get filename part of url */
+	snprintf (path1, sizeof(path1), "%s/distfiles/%s", config->tmp_dir, "nano.tar.gz");
+
+	if (stat (path1, &tmp) == -1)
+	{
+		printf ("File does not exist");
+		return -1;
+	}
+
+	snprintf (path1, sizeof(path1), "%s/distfiles/%s", config->tmp_dir, "nano.tar.gz");
+	snprintf (path2, sizeof(path2), "%s", config->tmp_dir);
+	snprintf (command, sizeof(command), "tar xvpf %s -C %s", path1, path2);
+
+	system (command);
+
+	/* CHANGE DIR */
+	/* TODO Get real extracted path. Should we use <program>-<version>? */
+	snprintf (path1, sizeof(path1), "%s/nano-1.2.5", config->tmp_dir);
+	if (chdir (path1) == -1)
+	{
+		printf ("Error changing directory\n");
+		return -1;
+	}
+
+	/* CONFIGURE */
+	system("./configure");
+
+	/* MAKE */
+	system("make");
 	
+	/* 1) Extract distfile to /var/tmp/pacbox/<package>/
+	 * 2) Change dir
+	 * 3) Run ./configure
+	 * 4) Run make
+	 */
 	return 0;
 }
 

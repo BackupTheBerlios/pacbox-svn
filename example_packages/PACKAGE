@@ -1,11 +1,11 @@
  # COOLT
-NAME=mutt
-VERSION=1.5
-RELEASE=4
-CATEGORY=mail
+NAME=nano
+VERSION=1.2.5
+RELEASE=1
+CATEGORY=editors
 
 # ICKE
-DESCRIPTION=Cool mail client
+DESCRIPTION=Simple editor
 
 DEPENDENCIES=glibc gdbm db openssl expat
 BUILD_DEPENDENCIES=
