@@ -69,3 +69,10 @@ void list_clear (LinkedList *list)
 	/* Resets the counter */
 	list->num_nodes = 0;
 }
+
+void list_destry (LinkedList *list)
+{
+	list_clear (list);
+	free (list);
+	list = 0;
+}
