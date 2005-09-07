@@ -64,7 +64,7 @@ int package_get_info (Package *package)
 	char line_right[512];
 
 	/* TODO must get path to package file */
-	path = "/home/erik/Desktop/pacbox/PACKAGE";
+	path = "../example_packages/PACKAGE";
 
 	if ((file = fopen(path, "r")) == NULL)
 	{
