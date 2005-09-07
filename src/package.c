@@ -170,6 +170,22 @@ int package_is_installed (Package *package, GlobalConfig *config)
 
 int package_install_deps (Package *package)
 {
+	char *depslist[50];
+	int length = 0;
+
+	if (string_split_tokens (package->dependencies, " ", depslist, &length))
+	{
+		int i = 0;
+
+		for (i = 0; i < length; ++i)
+		{
+			printf ("%i: %s\n", i+1, depslist[i]);
+		}
+	}
+	else
+	{
+		printf ("Error parsing dependencies");
+	}
 	/* For each dependency listed, check if it is installed.
 	 * If not, install it */
 	return 0;
