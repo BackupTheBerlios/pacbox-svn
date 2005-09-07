@@ -5,6 +5,7 @@ typedef struct GlobalConfig {
 	char *cflags;			/* A string containing cflags	*/
 	char *base_dir;			/* Path to the package base		*/
 	char *db_dir;
+	char *tmp_dir;
 } GlobalConfig;
 
 /* Sets the struct to default values */

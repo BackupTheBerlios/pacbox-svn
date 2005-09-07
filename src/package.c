@@ -41,10 +41,14 @@ int package_install (char *name, GlobalConfig *config)
 		return -1;
 	}
 
+	if (package_build (&package) < 0)
+	{
+		printf ("Problems building package\n")
+	}
+
 	printf ("Everything is OK. Let's install it! :)\n");
 
 	/*
-	package_check_deps
 	package_build
 	package_register	
 	*/
@@ -68,7 +72,7 @@ int package_get_info (Package *package)
 
 	if ((file = fopen(path, "r")) == NULL)
 	{
-		printf("Error opening file: %s", path);
+		printf("Error opening file: %s\n", path);
 		return -1;
 	}
 
@@ -188,6 +192,14 @@ int package_install_deps (Package *package)
 	}
 	/* For each dependency listed, check if it is installed.
 	 * If not, install it */
+	return 0;
+}
+
+
+int package_build (Package *package)
+{
+	
+	
 	return 0;
 }
 

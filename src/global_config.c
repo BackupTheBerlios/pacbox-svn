@@ -9,6 +9,7 @@ void global_config_init (GlobalConfig *config)
 	config->cflags = 0;
 	config->base_dir = 0;
 	config->db_dir = 0;
+	config->tmp_dir = 0;
 }
 
 void global_config_set_defaults (GlobalConfig *config)
@@ -24,6 +25,9 @@ void global_config_set_defaults (GlobalConfig *config)
 
 	config->db_dir = malloc (50 * sizeof (char));
 	strncpy (config->db_dir, "/var/pacbox", 50);
+
+	config->tmp_dir = malloc (50 * sizeof (char));
+	strncpy (config->tmp_dir, "/var/tmp/pacbox", 50);
 }
 
 void global_config_print (GlobalConfig *config)
@@ -31,6 +35,7 @@ void global_config_print (GlobalConfig *config)
 	printf ("Pacbox base dir: %s\n", config->base_dir);
 	printf ("CFLAGS: %s\n", config->cflags);	
 	printf ("DB Dir: %s\n", config->db_dir);
+	printf ("Temp dir: %s\n", config->tmp_dir);
 }
 
 void global_config_destroy (GlobalConfig *config)
@@ -38,4 +43,5 @@ void global_config_destroy (GlobalConfig *config)
 	free (config->cflags);
 	free (config->base_dir);
 	free (config->db_dir);
+	free (config->tmp_dir);
 }
