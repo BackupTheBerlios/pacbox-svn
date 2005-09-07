@@ -31,6 +31,12 @@ int package_is_installed (Package *package, GlobalConfig *config);
 /* Check and install deps for a package */
 int package_install_deps (Package *package);
 
+/* Fetch a package from the Internet */
+int package_fetch (Package *package, GlobalConfig *config);
+
+/* Builds a package */
+int package_build (Package *package);
+
 /* Init's a struct of type Package */
 void package_init (Package *package);
 

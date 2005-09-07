@@ -35,24 +35,31 @@ int package_install (char *name, GlobalConfig *config)
 		printf ("Package is already installed\n");
 		return -1;
 	}
-
+/*
 	if (package_install_deps (&package) < 0)
 	{
 		printf ("Problems installing dependencies\n");
 		return -1;
 	}
-
+*/
+	if (package_fetch (&package, config) < 0)
+	{
+		printf ("Problems fetching package\n");
+		return -1;
+	}
+/*
 	if (package_build (&package) < 0)
 	{
-		printf ("Problems building package\n")
+		printf ("Problems building package\n");
+		return -1;
 	}
 
 	printf ("Everything is OK. Let's install it! :)\n");
-
-	/*
+*/
+/*	
 	package_build
 	package_register	
-	*/
+*/
 	package_destroy (&package);
 
 	return 0;
@@ -199,9 +206,46 @@ int package_install_deps (Package *package)
 }
 
 
+int package_fetch (Package *package, GlobalConfig *config)
+{
+	//TODO Make globalconfig contain command of download manager
+	//TODO Move checking of directories to some kind of startup-function
+	//TODO Currently just checking if /var/tmp/pacbox and /var/tmp/pacbox/distfiles
+	//     exists. I.e. /var/tmp must exist
+	char path[512];
+	struct stat tmp;
+
+	snprintf (path, sizeof(path), "%s", config->tmp_dir);
+	if (stat (path, &tmp) == -1)
+	{
+		/* Path does not exist, let's create it */
+		if (mkdir (path, 0755) != 0)
+		{
+			printf ("Error creating directory: %s\n", path);
+		}
+		printf ("Created directory: %s\n", path);
+	}
+
+	snprintf (path, sizeof(path), "%s/distfiles", config->tmp_dir);
+	if (stat (path, &tmp) == -1)
+	{
+		/* Path does not exist, let's create it */
+		if (mkdir (path, 0755) != 0)
+		{
+			printf ("Error creating directory: %s\n", path);
+		}
+		printf ("Created directory: %s\n", path);
+	}
+
+	/* Fetch it */
+
+
+	return 0;
+}
+
+
 int package_build (Package *package)
 {
-	
 	
 	return 0;
 }
