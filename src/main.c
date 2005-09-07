@@ -2,6 +2,7 @@
 #include "string_utils.h"
 #include "linked_list.h"
 #include "global_config.h"
+#include "arguments.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,43 +19,63 @@ void print_help ();
 /* Prints info for the compile and so forth */
 void print_info (GlobalConfig *conf);
 
-typedef struct Args {
-	int verbose;
-	int ask;
-} Args;
-
 int main (int argc, char **argv)
 {
 	GlobalConfig conf;
-	Args args = {0, 0};
+	Arguments args = {0, 0, 0, 0};
 	global_config_set_defaults (&conf);
 
 	if (argc == 1)
 	{
-		print_help ();
+		/*print_help ();*/
+		char tmp[] = {"bad:an;ka"};
+		char *list[50];
+		int length = 0;
+		
+		if (string_split_tokens (tmp, ";", list, &length))
+		{
+			int i;
+			
+			for (i = 0; i < length; ++i)
+			{
+				printf ("Part: %s\n", list[i]);	
+			}
+		}
 	}
 	else
 	{
-		int it;
+		int i;
 		
-		if (argc == 2)
+		if (argc == 2 && strcmp (argv[1], "info") == 0)
 		{
-			if (strcmp (argv[1], "info") == 0)
 				print_info (&conf);
 		}
-		else /* argc > 2 */
+		else /* argc >= 2 */
 		{
-			for (it = 1; it < argc; ++it)
+			for (i = 1; i < argc; ++i)
 			{
-				/* It is a argument */
-				if (strlen (argv[it]) == 2)	
+				/* its a argument */
+				if (argv[i][0] == '-')
 				{
-					if (argv[it][1] == 'v')
+					
+				}
+				else	 /* its a package */
+				{
+					
+				}
+
+				
+				/* It is a argument */
+				/*
+				if (strlen (argv[i]) == 2)	
+				{
+					if (argv[i][1] == 'v')
 						args.verbose++;
 				
-					if (argv[it][1] == 'a')
+					if (argv[i][1] == 'a')
 						args.ask = 1; 
 				}
+				*/
 			}
 
 			if (args.verbose > 0)
