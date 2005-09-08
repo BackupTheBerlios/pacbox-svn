@@ -92,16 +92,21 @@ void string_trim (char *string)
 
 LinkedList* string_split_tokens (char *str, char *tokens)
 {
+	/* Creates a new linked list */
 	ListNode *node;
 	LinkedList *list = malloc (sizeof (LinkedList));
+
+	/* Misc varibles */
 	int i;
 	int counter = 0;
 	int found = 0;
 	char *current_pos = str;
 	int str_len = strlen (str);
 
+	/* Inits new new list */
 	list_init (list);
 	
+	/* Iterates through the string */
 	for (i = 0; i < str_len; ++i)
 	{
 		if (string_find_ch (tokens, str[i]))
