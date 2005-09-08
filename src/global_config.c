@@ -17,8 +17,8 @@ void global_config_set_defaults (GlobalConfig *config)
 	/* Don't know witch way to do this 
 	 * but i'll fix it later */
 	char cflags[] = "-pipe -fomit-frame-pointer";
-	config->cflags = calloc (strlen (cflags), sizeof (char));
-	strcpy (config->cflags, cflags);
+	config->cflags = calloc (80, sizeof (char));
+	strncpy (config->cflags, cflags, 75);
 
 	config->base_dir = calloc (50, sizeof (char));
 	strcpy (config->base_dir, "/usr/pacbox");
