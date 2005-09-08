@@ -40,25 +40,16 @@ int	string_find_ch (char *str, char ch)
 	return 0;
 }
 
-void string_split (const char *string, char *left, char *right, char token)
+void string_split (char *string, char **left, char **right, char token)
 {
-	int i = 0;
-	char *token_pos = string_find ((char *)string, token);
-	
-	/* checks if token is not found */
-	if (token_pos == string)
-		return;
-	
-	while ((string + i) != token_pos)
-	{
-		left[i] = string[i];
-		++i;
-	}
-	
-	left[i] = '\0';
+	char *tmp = strchr (string, token);
 
-	/* Note: This is not godd! */
-	strncpy (right, token_pos + 1, 500);
+	if (tmp != NULL)	
+	{
+		*left = string;
+		*tmp = '\0';
+		*right = tmp + 1;
+	}
 }
 
 

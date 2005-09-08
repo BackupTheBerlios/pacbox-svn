@@ -15,7 +15,7 @@ int	string_find_ch (char *str, char ch);
 /* Splits a string between the given token, 
  * and put the left in left argument
  * and right in the right argument */
-void string_split (const char *string, char *left, char *right, char token);
+void string_split (char *string, char **left, char **right, char token);
 
 /* Trims whitespace from both edges of a string
  * WARNING: Modifies existing string */

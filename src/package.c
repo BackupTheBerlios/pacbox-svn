@@ -72,9 +72,6 @@ int package_get_info (Package *package)
 	FILE *file;
 	char *path;
 	char buf[512];
-	/* Size of temporary variables which will hold the result from string_split */
-	char line_left[50];
-	char line_right[512];
 
 	/* TODO must get path to package file */
 	path = "../example_packages/PACKAGE";
@@ -87,6 +84,8 @@ int package_get_info (Package *package)
 
 	while (fgets(buf, sizeof(buf), file))
 	{
+		char *line_left, *line_right;
+		
 		/* Trim whitespace */
 		string_trim (buf);
 
@@ -97,7 +96,7 @@ int package_get_info (Package *package)
 		}
 
 		/* Split on = */
-		string_split (buf, line_left, line_right, '=');
+		string_split (buf, &line_left, &line_right, '=');
 
 
 		/* NOTE: Memory allocation below for members of package struct will
