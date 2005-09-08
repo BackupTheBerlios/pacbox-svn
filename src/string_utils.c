@@ -83,7 +83,7 @@ LinkedList* string_split_tokens (char *str, char *tokens)
 	/* Iterates through the string */
 	for (i = 0; i < str_len; ++i)
 	{
-		if (string_find_ch (tokens, str[i]))
+		if (strchr (tokens, str[i]))
 		{
 			char *tmp;
 			node = malloc (sizeof (ListNode));
