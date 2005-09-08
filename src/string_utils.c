@@ -23,23 +23,6 @@ char* string_find (char *str, char ch)
 	return ptr;
 }
 
-int	string_find_ch (char *str, char ch)
-{
-	int i;
-	int str_len = strlen (str);
-	
-	if (strlen (str) == 0)
-		return 0;
-	
-	for (i = 0; i < str_len; ++i)
-	{
-		if (ch == str[i])
-			return 1;	
-	}
-
-	return 0;
-}
-
 void string_split (char *string, char **left, char **right, char token)
 {
 	char *tmp = strchr (string, token);

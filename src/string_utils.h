@@ -9,9 +9,6 @@
  */
 char * string_find (char *str, char ch);
 
-/* Checks if a char is in the string */
-int	string_find_ch (char *str, char ch);
-
 /* Splits a string between the given token, 
  * and put the left in left argument
  * and right in the right argument */
