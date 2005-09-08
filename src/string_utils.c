@@ -94,7 +94,7 @@ LinkedList* string_split_tokens (char *str, char *tokens)
 {
 	/* Creates a new linked list */
 	ListNode *node;
-	LinkedList *list = malloc (sizeof (LinkedList));
+	LinkedList *list = list_new ();
 
 	/* Misc varibles */
 	int i;

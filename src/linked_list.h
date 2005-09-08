@@ -14,6 +14,9 @@ typedef struct _LinkedList {
 	int num_nodes;		/* Number of nodes in the list */
 } LinkedList;
 
+/* Returns a new linked list */
+LinkedList * list_new ();
+
 /* Initiate list*/
 void list_init (LinkedList *list);
 

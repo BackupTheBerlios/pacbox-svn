@@ -2,6 +2,12 @@
 
 #include <stdlib.h>
 
+LinkedList * list_new ()
+{
+	LinkedList *list = malloc (sizeof (LinkedList));
+	list_init (list);
+	return list;
+}
 void list_init (LinkedList *list)
 {
 	/* Resets the variables */
