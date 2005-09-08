@@ -282,7 +282,7 @@ int package_build (Package *package, GlobalConfig *config)
 	snprintf (path1, sizeof(path1), "%s/nano-1.2.5", config->tmp_dir);
 	if (chdir (path1) == -1)
 	{
-		printf ("Error changing directory\n");
+		printf ("Error changing directory to \"%s\"\n", path1);
 		return -1;
 	}
 
