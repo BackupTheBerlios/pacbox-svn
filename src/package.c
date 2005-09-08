@@ -55,7 +55,11 @@ int package_install (char *name, GlobalConfig *config)
 		return -1;
 	}
 
-/*	printf ("Everything is OK. Let's install it! :)\n");*/
+	if (package_merge (&package, config) < 0)
+	{
+		printf ("Problems installing package\n");
+		return -1;
+	}
 
 /*	
 	package_build
@@ -286,7 +290,8 @@ int package_build (Package *package, GlobalConfig *config)
 	}
 
 	/* CONFIGURE */
-	system("./configure");
+	snprintf (command, sizeof(command), "./configure --prefix=%s/nano-1.2.5/install", config->tmp_dir);
+	system(command);
 
 	/* MAKE */
 	system("make");
@@ -296,6 +301,37 @@ int package_build (Package *package, GlobalConfig *config)
 	 * 3) Run ./configure
 	 * 4) Run make
 	 */
+	return 0;
+}
+
+
+int package_merge (Package *package, GlobalConfig *config)
+{
+	struct stat tmp;
+	char path[512];
+
+	/* TODO Get program name-version-release instead of nano-1.2.5 */
+	snprintf (path, sizeof(path), "%s/nano-1.2.5/install", config->tmp_dir);
+	if (stat (path, &tmp) == -1)
+	{
+		/* Temporary build dir does not exist, let's create it */
+		if (mkdir (path, 0755) != 0)
+			printf ("Error creating install directory\n");
+	}
+
+	/* Change to build dir */
+	snprintf (path, sizeof(path), "%s/nano-1.2.5", config->tmp_dir);
+	if (chdir (path) == -1)
+	{
+		printf ("Error changing directory to \"%s\"\n", path);
+		return -1;
+	}
+
+	/* Install to "fake dir" */
+	system ("make install");
+
+	/* TODO Move the files to real filesystem */
+
 	return 0;
 }
 

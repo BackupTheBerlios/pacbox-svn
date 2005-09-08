@@ -37,6 +37,9 @@ int package_fetch (Package *package, GlobalConfig *config);
 /* Builds a package */
 int package_build (Package *package, GlobalConfig *config);
 
+/* Merge a package into the file tree */
+int package_merge (Package *package, GlobalConfig *config);
+
 /* Init's a struct of type Package */
 void package_init (Package *package);
 
