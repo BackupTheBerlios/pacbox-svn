@@ -23,7 +23,7 @@ typedef struct Package {
 int package_install (char *name, GlobalConfig *config);
 
 /* Parse packagefile and put into struct */
-int package_get_info (Package *package);
+int package_parse (Package *package, GlobalConfig *config);
 
 /* Check if a package already is installed */
 int package_is_installed (Package *package, GlobalConfig *config);

@@ -15,7 +15,7 @@ int package_install (char *name, GlobalConfig *config)
 	package_init (&package);
 
 	/* Get info */
-	if (package_get_info (&package) < 0)
+	if (package_parse (&package, config) < 0)
 	{
 		printf ("Error parsing package file\n");
 		return -1;
@@ -31,7 +31,7 @@ int package_install (char *name, GlobalConfig *config)
 	printf ("%s\n", package.build_dependencies);
 	printf ("%s\n", package.url); */
 
-	if (package_is_installed (&package, config) == 0)
+	if (package_is_installed (&package, config) < 0)
 	{
 		printf ("Package is already installed\n");
 		return -1;
@@ -71,13 +71,15 @@ int package_install (char *name, GlobalConfig *config)
 }
 
 
-int package_get_info (Package *package)
+int package_parse (Package *package, GlobalConfig *config)
 {
 	FILE *file;
 	char *path;
 	char buf[512];
 
 	/* TODO must get path to package file */
+	/* If we use the command find, is the syntax
+	 * the same in freebsd find and linux find? */
 	path = "../example_packages/PACKAGE";
 
 	if ((file = fopen(path, "r")) == NULL)
@@ -88,7 +90,8 @@ int package_get_info (Package *package)
 
 	while (fgets(buf, sizeof(buf), file))
 	{
-		char *line_left, *line_right;
+		char *line_left;
+		char *line_right;
 		
 		/* Trim whitespace */
 		string_trim (buf);
