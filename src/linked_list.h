@@ -23,6 +23,9 @@ void list_init (LinkedList *list);
 /* Adds a node in the back of the list */
 void list_add_node (LinkedList *list, ListNode *node);
 
+/* Creates a listnode with given data */
+ListNode * node_create (void *data);
+
 /* Clears the list and removes any used memory */
 void list_clear (LinkedList *list);
 

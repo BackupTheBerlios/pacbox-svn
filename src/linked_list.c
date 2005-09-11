@@ -39,6 +39,13 @@ void list_add_node (LinkedList *list, ListNode *node)
 	list->num_nodes++;
 }
 
+ListNode * node_create (void *data)
+{
+	ListNode *node = malloc (sizeof (ListNode));
+	node->data = data;
+	return node;
+}
+
 void list_clear (LinkedList *list)
 {
 	/* if the list is empty */

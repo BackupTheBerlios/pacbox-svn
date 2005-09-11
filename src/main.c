@@ -37,13 +37,31 @@ int main (int argc, char **argv)
 		for (i = 1; i < argc; ++i)
 		{
 			if (strcmp (argv[i], "-v") == 0)
-			{
+				args->verbose++;
+			else if (strcmp (argv[i], "-a") == 0)
+				args->ask = 1;
+			else
+			{	/* Its a package */
+				char *tmp = malloc (strlen (argv[i]) * sizeof (char));
+				strcpy (tmp, argv[i]);
+				list_add_node (args->package_list, 
+							   node_create(tmp) );	
 			}
 		}
-		/*
-		if (verbose)
-			printf ("Installing....\n");
-		*/
+		
+		if (args->verbose)
+		{
+			ListNode *it;
+			printf ("Going to install packages:\n");
+			for (it = args->package_list->first;
+				 it != args->package_list->last->next;
+				 it = it->next)
+			{
+				printf ("%s\n", (char *)it->data);
+			}
+		}
+		
+		
 		/*
 		 * package_install("/home/erik/Desktop/pacbox/echo/PACKAGE", &conf);
 		 * */
