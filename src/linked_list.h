@@ -27,5 +27,6 @@ void list_add_node (LinkedList *list, ListNode *node);
 void list_clear (LinkedList *list);
 
 /* Clears the list and removes the list itself */
-void list_destry (LinkedList *list);
+void list_destroy (LinkedList *list);
+
 #endif /* _LINKED_LIST_H_ */

@@ -41,8 +41,13 @@ void list_add_node (LinkedList *list, ListNode *node)
 
 void list_clear (LinkedList *list)
 {
+	/* if the list is empty */
+	if (list->first == 0)
+	{
+		return;
+	}
+	else if (list->first == list->last)
 	/* If there is just one item */
-	if (list->first == list->last)
 	{
 		free (list->first->data);
 		free (list->first);
@@ -76,7 +81,7 @@ void list_clear (LinkedList *list)
 	list->num_nodes = 0;
 }
 
-void list_destry (LinkedList *list)
+void list_destroy (LinkedList *list)
 {
 	list_clear (list);
 	free (list);
