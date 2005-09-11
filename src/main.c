@@ -60,11 +60,28 @@ int main (int argc, char **argv)
 				printf ("%s\n", (char *)it->data);
 			}
 		}
-		
-		
-		/*
-		 * package_install("/home/erik/Desktop/pacbox/echo/PACKAGE", &conf);
-		 * */
+
+		if (args->ask)
+		{
+			char c;
+			printf ("\nDo you want to proceed? [Y/n] ");
+			scanf ("%c", &c);
+			
+			if (c == 'Y' || c == 'y' || c == '\n')
+			{
+				/* install */
+				printf ("Installing....\n");
+			}
+		}
+		else	
+		{
+			/* installs the packages one by one */
+			
+			
+			/*
+			* package_install("/home/erik/Desktop/pacbox/echo/PACKAGE", &conf);
+			* */
+		}
 	}
 	
 	global_config_destroy (&conf);
