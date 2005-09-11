@@ -2,13 +2,11 @@
 #include "string_utils.h"
 #include "linked_list.h"
 #include "global_config.h"
-#include "arguments.h"
+#include "args.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#define PACKAGE_VERSION "0.0.1"
 
 /* Prints the usage for the program */
 void print_usage (const char *name);
@@ -22,71 +20,37 @@ void print_info (GlobalConfig *conf);
 int main (int argc, char **argv)
 {
 	GlobalConfig conf;
-	Arguments args = {0, 0, 0, 0};
+	Args *args = args_new ();
 	global_config_set_defaults (&conf);
-
+	
+	/* this ocours when the user
+	 * dont supply arguments */
 	if (argc == 1)
 	{
 		print_help ();
 	}
 	else
-	{
+	{	
 		int i;
 		
-		if (argc == 2 && strcmp (argv[1], "info") == 0)
+		/* Iterates through the arguments */
+		for (i = 1; i < argc; ++i)
 		{
-				print_info (&conf);
+			if (strcmp (argv[i], "-v") == 0)
+			{
+			}
 		}
-		else /* argc >= 2 */
-		{
-			for (i = 1; i < argc; ++i)
-			{
-				/* its a argument */
-				if (argv[i][0] == '-')
-				{
-					
-				}
-				else	 /* its a package */
-				{
-					
-				}
-
-				
-				/* It is a argument */
-				/*
-				if (strlen (argv[i]) == 2)	
-				{
-					if (argv[i][1] == 'v')
-						args.verbose++;
-				
-					if (argv[i][1] == 'a')
-						args.ask = 1; 
-				}
-				*/
-			}
-
-			if (args.verbose > 0)
-			{
-				printf ("Using verbose: ON\n");
-			}
-			
-			if (args.ask == 1)
-			{
-				char c;
-				printf ("Want to install these packages? [Y/n] ");
-				scanf ("%c", &c);
-			
-				if (c == 'y' || c == 'Y')
-				{	
-					printf ("Installing....\n");
-				}
-			}
-			package_install("/home/erik/Desktop/pacbox/echo/PACKAGE", &conf);
-		}
+		/*
+		if (verbose)
+			printf ("Installing....\n");
+		*/
+		/*
+		 * package_install("/home/erik/Desktop/pacbox/echo/PACKAGE", &conf);
+		 * */
 	}
 	
-	
 	global_config_destroy (&conf);
+	args_destroy (args);
 	return 0;
 }
 
@@ -97,6 +61,7 @@ void print_usage (const char *name)
 
 void print_help ()
 {
+	printf ("%s %s\n", PACKAGE_NAME, PACKAGE_VERSION);
 	printf ("Args\n");
 	printf ("\t-h\t Prints this help text\n");
 	printf ("\t-a\t Asks first if you want to install\n");
