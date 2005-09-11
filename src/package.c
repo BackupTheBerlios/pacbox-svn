@@ -75,7 +75,8 @@ int package_parse (Package *package, GlobalConfig *config)
 {
 	FILE *file;
 	char *path;
-	char buf[512];
+	char line[1024];
+	int line_length = 0;
 
 	/* TODO must get path to package file */
 	/* If we use the command find, is the syntax
@@ -88,38 +89,48 @@ int package_parse (Package *package, GlobalConfig *config)
 		return -1;
 	}
 
-	while (fgets(buf, sizeof(buf), file))
+	while (fgets(line, sizeof (line), file))
 	{
 		char *line_left;
 		char *line_right;
+		int line_right_len;
+		
+		line_length = strlen (line);
+
+		/* Check so that length of lines is not too large */
+		if (line_length == sizeof (line)-1)
+		{
+			printf ("Too many characters in line:\n%s", line);
+			return -1;
+		}
 		
 		/* Trim whitespace */
-		string_trim (buf);
+		string_trim (line);
 
 		/* Skip comments and empty lines */
-		if ((buf[0] == '#') || (buf[0] == '\n'))
+		if ((line[0] == '#') || (line[0] == '\n') || (line[0] == '\r'))
 		{
 			continue;
 		}
 
 		/* Split on = */
-		string_split (buf, &line_left, &line_right, '=');
+		string_split (line, &line_left, &line_right, '=');
 
 
-		/* NOTE: Memory allocation below for members of package struct will
-		 * be for whole line since we dont know size of only right part */
+		/* Save length of right part of line */
+		line_right_len = strlen (line_right)+1;
 
 		/* NAME */
 		if (strcmp(line_left, "NAME") == 0)
 		{
-			package->name = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->name, line_right, sizeof(buf));
+			package->name = calloc (line_right_len, sizeof(char));
+			strncpy (package->name, line_right, line_right_len);
 		}
 		/* VERSION */
 		else if (strcmp(line_left, "VERSION") == 0)
 		{
-			package->version = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->version, line_right, sizeof(buf));
+			package->version = calloc (line_right_len, sizeof(char));
+			strncpy (package->version, line_right, line_right_len);
 		}
 		/* RELEASE */
 		else if (strcmp(line_left, "RELEASE") == 0)
@@ -129,32 +140,32 @@ int package_parse (Package *package, GlobalConfig *config)
 		/* CATEGORY */
 		else if (strcmp(line_left, "CATEGORY") == 0)
 		{
-			package->category = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->category, line_right, sizeof(buf));
+			package->category = calloc (line_right_len, sizeof(char));
+			strncpy (package->category, line_right, line_right_len);
 		}
 		/* DESCRIPTION */
 		else if (strcmp(line_left, "DESCRIPTION") == 0)
 		{
-			package->description = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->description, line_right, sizeof(buf));
+			package->description = calloc (line_right_len, sizeof(char));
+			strncpy (package->description, line_right, line_right_len);
 		}
 		/* DEPENDENCIES */
 		else if (strcmp(line_left, "DEPENDENCIES") == 0)
 		{
-			package->dependencies = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->dependencies, line_right, sizeof(buf));
+			package->dependencies = calloc (line_right_len, sizeof(char));
+			strncpy (package->dependencies, line_right, line_right_len);
 		}
 		/* BUILD_DEPENDENCIES */
 		else if (strcmp(line_left, "BUILD_DEPENDENCIES") == 0)
 		{
-			package->build_dependencies = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->build_dependencies, line_right, sizeof(buf));
+			package->build_dependencies = calloc (line_right_len, sizeof(char));
+			strncpy (package->build_dependencies, line_right, line_right_len);
 		}
 		/* URL */
 		else if (strcmp(line_left, "URL") == 0)
 		{
-			package->url = calloc (sizeof(buf), sizeof(char));
-			strncpy (package->url, line_right, sizeof(buf));
+			package->url = calloc (line_right_len, sizeof(char));
+			strncpy (package->url, line_right, line_right_len);
 		}
 			
 	}
