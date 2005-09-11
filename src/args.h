@@ -19,6 +19,8 @@ Args * args_new ();
 /* Sets struct to default values */
 void args_init (Args *args);
 
+void args_parse (Args *args, int argc,  char **argv);
+
 /* Destroys the struct */
 void args_destroy (Args *args);
 

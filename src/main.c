@@ -31,28 +31,8 @@ int main (int argc, char **argv)
 	}
 	else
 	{	
-		int i;
-		
-		/* Iterates through the arguments */
-		for (i = 1; i < argc; ++i)
-		{
-			/* Checks for arguments */
-			if (strcmp (argv[i], "-v") == 0)
-				args->verbose++;
-			else if (strcmp (argv[i], "-a") == 0)
-				args->ask = 1;
-			else
-			{	
-				/* Its a package */
-				char *tmp = calloc (strlen (argv[i]), sizeof (char*));
-				
-				strcpy (tmp, argv[i]);
-				
-				list_add_node (args->package_list, 
-							   node_create(tmp) );	
-			}
-		}
-		
+		args_parse (args, argc, argv);
+
 		/* Prints some info */
 		if (args->verbose)
 		{
