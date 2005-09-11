@@ -16,8 +16,8 @@ typedef struct {
 /* Creates a new args struct */ 
 Args * args_new ();
 
-/* Sets artuct to default values */
-static void args_init (Args *args);
+/* Sets struct to default values */
+void args_init (Args *args);
 
 /* Destroys the struct */
 void args_destroy (Args *args);

@@ -7,7 +7,7 @@ Args * args_new ()
 	return args;
 }
 
-static void args_init (Args *args)
+void args_init (Args *args)
 {
 	args->verbose = 0;
 	args->ask = 0;
