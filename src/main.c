@@ -36,19 +36,24 @@ int main (int argc, char **argv)
 		/* Iterates through the arguments */
 		for (i = 1; i < argc; ++i)
 		{
+			/* Checks for arguments */
 			if (strcmp (argv[i], "-v") == 0)
 				args->verbose++;
 			else if (strcmp (argv[i], "-a") == 0)
 				args->ask = 1;
 			else
-			{	/* Its a package */
-				char *tmp = malloc (strlen (argv[i]) * sizeof (char));
+			{	
+				/* Its a package */
+				char *tmp = calloc (strlen (argv[i]), sizeof (char*));
+				
 				strcpy (tmp, argv[i]);
+				
 				list_add_node (args->package_list, 
 							   node_create(tmp) );	
 			}
 		}
 		
+		/* Prints some info */
 		if (args->verbose)
 		{
 			ListNode *it;
@@ -84,6 +89,7 @@ int main (int argc, char **argv)
 		}
 	}
 	
+	/* Removes allocated memory */
 	global_config_destroy (&conf);
 	args_destroy (args);
 	return 0;
@@ -109,6 +115,5 @@ void print_info (GlobalConfig *conf)
 {
 	printf ("%s %s\n", PACKAGE_NAME, PACKAGE_VERSION);
 	global_config_print (conf);
-	
 }
 
