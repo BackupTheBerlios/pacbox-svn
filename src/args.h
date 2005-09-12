@@ -10,6 +10,7 @@ typedef struct {
 	int			verbose;		/* Sets verbose output */
 	int			ask;			/* The program should ask first */
 	int			pretend;		/* The program just shows the packages */
+	int			fetch;			/* The user want only to fetch the packages */
 	LinkedList	*package_list;	/* A list of packages */
 } Args;
 

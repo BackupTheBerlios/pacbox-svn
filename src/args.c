@@ -31,6 +31,10 @@ void args_parse (Args *args, int argc,  char **argv)
 		{
 			args->ask = 1;
 		}
+		else if (strcmp (argv[i], "-f") == 0)
+		{
+			args->fetch = 1;
+		}
 		else if (argv[i][0] == '-' && strlen (argv[i]) > 2)
 		{
 			int j;
@@ -42,6 +46,9 @@ void args_parse (Args *args, int argc,  char **argv)
 
 				if (argv[i][j] == 'a')
 					args->ask = 1;
+				
+				if (argv[i][j] == 'f')
+					args->fetch = 1;
 			}
 		}
 		else
