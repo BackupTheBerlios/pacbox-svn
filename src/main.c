@@ -88,6 +88,7 @@ void print_help ()
 	printf ("\t-h\t Prints this help text\n");
 	printf ("\t-a\t Asks first if you want to install\n");
 	printf ("\t-v\t Prints some more output\n");
+	printf ("\t-f\t Fetches the packages, not installs them\n");
 	printf ("\nKeywords\n");
 	printf ("\tinfo\t Prints pacbox info and other\n");
 }
