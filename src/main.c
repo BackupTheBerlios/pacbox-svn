@@ -31,6 +31,7 @@ int main (int argc, char **argv)
 	}
 	else
 	{	
+		/* Parses all the arguments */
 		args_parse (args, argc, argv);
 
 		/* Prints some info */

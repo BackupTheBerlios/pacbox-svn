@@ -24,9 +24,26 @@ void args_parse (Args *args, int argc,  char **argv)
 	{
 		/* Checks for arguments */
 		if (strcmp (argv[i], "-v") == 0)
+		{
 			args->verbose++;
+		}
 		else if (strcmp (argv[i], "-a") == 0)
+		{
 			args->ask = 1;
+		}
+		else if (argv[i][0] == '-' && strlen (argv[i]) > 2)
+		{
+			int j;
+
+			for (j = 1; j < strlen (argv[i]); ++j)
+			{
+				if (argv[i][j] == 'v')
+					args->verbose++;
+
+				if (argv[i][j] == 'a')
+					args->ask = 1;
+			}
+		}
 		else
 		{	
 			/* Its a package */
