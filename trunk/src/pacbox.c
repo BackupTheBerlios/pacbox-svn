@@ -26,9 +26,11 @@
 #include <stdio.h>
 #include <string.h>
 
-void usage ();
+void 
+usage ();
 
-int main (int argc, char **argv)
+int 
+main (int argc, char **argv)
 {
 	/* Checks if there are no args */
 	if (argc == 1) {
@@ -41,7 +43,8 @@ int main (int argc, char **argv)
 	return 0;
 }
 
-void usage ()
+void 
+usage ()
 {
 	fprintf (stderr, "usage pacbox [options] package\n\n");
 }
