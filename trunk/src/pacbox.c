@@ -50,15 +50,15 @@ main (int argc, char **argv)
 	
 	/* Checks if there are no args */
 	if (argc == 1) {
-		usage ();
-		exit (1);
+		usage();
+		exit(1);
 	}
 	
 	/**
 	 * Using getopt(3) to capture all options that is
 	 * given to the program 
 	 */
-	while ((tmp_ch = getopt (argc, argv, "v")) != -1) {
+	while ((tmp_ch = getopt(argc, argv, "v")) != -1) {
 		switch (tmp_ch) {
 			case 'v':
 				printf ("Setting verbose ON\n");
@@ -72,5 +72,7 @@ main (int argc, char **argv)
 static void 
 usage ()
 {
-	fprintf (stderr, "usage pacbox [-v] package\n\n");
+	fprintf(stderr, "usage pacbox [-v] package\n\n");
+	fprintf(stderr, "options:\n");
+	fprintf(stderr, "\t-v\tSets verbose logging\n");
 }
