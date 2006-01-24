@@ -26,7 +26,11 @@
 #include <stdio.h>
 #include <string.h>
 
-void 
+/**
+ * Prints usage information for the program 
+ * to the stderr output 
+ */
+static void 
 usage ();
 
 int 
@@ -37,13 +41,15 @@ main (int argc, char **argv)
 		usage ();
 		exit (1);
 	} else {
-		/* check the args here */	
+		/**
+		 * TODO: Use getopt here to parse options
+		 */
 	}
 	
 	return 0;
 }
 
-void 
+static void 
 usage ()
 {
 	fprintf (stderr, "usage pacbox [options] package\n\n");
