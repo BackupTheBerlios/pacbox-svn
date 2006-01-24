@@ -25,6 +25,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <getopt.h>
+
+/**
+ * Struct that represents any option given at 
+ * command-line 
+ */
+struct options {
+	int verbose; /* toogles verbose mode */
+};
 
 /**
  * Prints usage information for the program 
@@ -36,16 +45,27 @@ usage ();
 int 
 main (int argc, char **argv)
 {
+	char tmp_ch;
+	struct options opt = { 0 };
+	
 	/* Checks if there are no args */
 	if (argc == 1) {
 		usage ();
 		exit (1);
-	} else {
-		/**
-		 * TODO: Use getopt here to parse options
-		 */
 	}
 	
+	/**
+	 * Using getopt(3) to capture all options that is
+	 * given to the program 
+	 */
+	while ((tmp_ch = getopt (argc, argv, "v")) != -1) {
+		switch (tmp_ch) {
+			case 'v':
+				printf ("Setting verbose ON\n");
+				opt.verbose = 1;
+		}
+	}
+
 	return 0;
 }
 
