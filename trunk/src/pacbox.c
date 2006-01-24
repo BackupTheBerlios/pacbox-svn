@@ -72,5 +72,5 @@ main (int argc, char **argv)
 static void 
 usage ()
 {
-	fprintf (stderr, "usage pacbox [options] package\n\n");
+	fprintf (stderr, "usage pacbox [-v] package\n\n");
 }
