@@ -28,12 +28,25 @@
 #include <getopt.h>
 
 /**
+ * This defines the path for the global config
+ * Going to change this when the program uses 
+ * /etc for config-dir 
+ */
+#define GLOBAL_CONFIG "config"
+
+/**
  * Struct that represents any option given at 
  * command-line 
  */
 struct options {
 	int verbose; /* toogles verbose mode */
 };
+
+/**
+ * Reads the config-file and fetches the value 
+ * for the property name 
+ */
+int default_config_read (const char *_name);
 
 /**
  * Prints usage information for the program 
@@ -65,6 +78,8 @@ main (int argc, char **argv)
 				opt.verbose = 1;
 		}
 	}
+
+	printf ("Index: %d", optind);
 
 	return 0;
 }
