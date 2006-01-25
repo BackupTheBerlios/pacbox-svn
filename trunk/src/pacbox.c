@@ -28,27 +28,6 @@
 #include <getopt.h>
 
 /**
- * This defines the path for the global config
- * Going to change this when the program uses 
- * /etc for config-dir 
- */
-#define GLOBAL_CONFIG "config"
-
-/**
- * Struct that represents any option given at 
- * command-line 
- */
-struct options {
-	int verbose; /* toogles verbose mode */
-};
-
-/**
- * Reads the config-file and fetches the value 
- * for the property name 
- */
-int default_config_read (const char *_name);
-
-/**
  * Prints usage information for the program 
  * to the stderr output 
  */
@@ -59,7 +38,9 @@ int
 main (int argc, char **argv)
 {
 	char tmp_ch;
-	struct options opt = { 0 };
+	int i;
+	int verbose = 0;
+	int install = 0; 
 	
 	/* Checks if there are no args */
 	if (argc == 1) {
@@ -71,16 +52,39 @@ main (int argc, char **argv)
 	 * Using getopt(3) to capture all options that is
 	 * given to the program 
 	 */
-	while ((tmp_ch = getopt(argc, argv, "v")) != -1) {
+	while ((tmp_ch = getopt(argc, argv, "vi")) != -1) {
 		switch (tmp_ch) {
 			case 'v':
-				printf ("Setting verbose ON\n");
-				opt.verbose = 1;
+				printf("Setting verbose ON\n");
+				verbose = 1;
+				break;
+			
+			case 'i':
+				install = 1;
+				break;
+
+			default:
+				usage();
 		}
 	}
-
-	printf ("Index: %d", optind);
-
+	
+	/**
+	 * Removes the options from the arg-string by
+	 * moving the argv-pointer and reset the argc-counter
+	 */
+	argc -= optind;
+    argv += optind;
+	
+	for (i = 0; i < argc; i++) {
+		
+		if (install) {
+			printf("Installing package: %s\n", argv[i]);
+		} else{
+			printf("No action specified\n");
+			usage();
+		}
+	}
+	
 	return 0;
 }
 
@@ -88,6 +92,10 @@ static void
 usage ()
 {
 	fprintf(stderr, "usage pacbox [-v] package\n\n");
-	fprintf(stderr, "options:\n");
+	fprintf(stderr, "Options:\n");
 	fprintf(stderr, "\t-v\tSets verbose logging\n");
+	fprintf(stderr, "Actions:\n");
+	fprintf(stderr, "\t-i\t install(s) package(s)\n");
+
+	exit(1);
 }
