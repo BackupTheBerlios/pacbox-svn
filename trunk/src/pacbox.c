@@ -28,6 +28,13 @@
 #include <getopt.h>
 
 /**
+ * Installs a package witch is given by
+ * _pkg_name
+ */
+int
+pkg_install (const char *_pkg_name);
+
+/**
  * Prints usage information for the program 
  * to the stderr output 
  */
@@ -108,3 +115,12 @@ usage ()
 
 	exit(1);
 }
+
+int
+pkg_install (const char *_pkg_name)
+{
+	/**
+	 * TODO: Make this work!
+	 */
+}
+
