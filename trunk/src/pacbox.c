@@ -41,6 +41,7 @@ main (int argc, char **argv)
 	int i;
 	int verbose = 0;
 	int install = 0; 
+	int uninstall = 0;
 	
 	/* Checks if there are no args */
 	if (argc == 1) {
@@ -52,15 +53,15 @@ main (int argc, char **argv)
 	 * Using getopt(3) to capture all options that is
 	 * given to the program 
 	 */
-	while ((tmp_ch = getopt(argc, argv, "vi")) != -1) {
+	while ((tmp_ch = getopt(argc, argv, "vu")) != -1) {
 		switch (tmp_ch) {
 			case 'v':
 				printf("Setting verbose ON\n");
 				verbose = 1;
 				break;
 			
-			case 'i':
-				install = 1;
+			case 'u':
+				uninstall = 1;
 				break;
 
 			default:
@@ -75,6 +76,13 @@ main (int argc, char **argv)
 	argc -= optind;
     argv += optind;
 	
+	/* Checks if any packets are given */
+	if (argc == 0) {
+		printf ("No package(s) given\n");
+		usage();
+	}
+
+		
 	for (i = 0; i < argc; i++) {
 		
 		if (install) {
@@ -95,7 +103,8 @@ usage ()
 	fprintf(stderr, "Options:\n");
 	fprintf(stderr, "\t-v\tSets verbose logging\n");
 	fprintf(stderr, "Actions:\n");
-	fprintf(stderr, "\t-i\t install(s) package(s)\n");
+	fprintf(stderr, "\t-u\t uninstall(s) package(s)\n");
+	fprintf(stderr, "\t-u\t uninstall(s) package(s) with all dependensies\n");
 
 	exit(1);
 }
